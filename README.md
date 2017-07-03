@@ -14,8 +14,9 @@ integer,allocatable :: type_list(:)
 integer,allocatable :: shared_list(:)
 integer,parameter :: num_of_variables = 6
 integer :: nx,ny,nz
-character(len=10) :: filename='test.plt'
+character(len=50) :: filename='test.plt'
 real(kind=4),allocatable :: your_datas(:,:,:,:)
+real(kind=4) :: physics_time
 
 allocate(your_datas(nx,ny,nz,num_of_variables)
 allocate(locations(num_of_variables))
@@ -31,12 +32,15 @@ shared_list = -1
 type_list = 1
 
 ! call init subroutine first
-call plt_file%init(filename,nx,ny,nz,'Title','x,y,z,u,v,w')
+! nx, ny, nz means the dimension of the data
+! 'x,y,z,u,v,w' is a string contains names of variables, must be divided by ','
+call plt_file%init(filename,nx,ny,nz,'Tecplot File Title','x,y,z,u,v,w')
 
 ! for each zone, call the two subroutines
+! physics_time can be any value, it will only be used when there are more than 1 zone in a file.
 call plt_file%write_zone_header('zone name', physics_time, 0, locations) 
-! your_datas(:,:,:,1:3) =  x,y,z coordinates
-! your_datas(:,:,:,4:6) =  u,v,w coordinates
+! your_datas(:,:,:,1:3) =  x,y,z coordinates(Variable assignment is omitted in this example)
+! your_datas(:,:,:,4:6) =  u,v,w datas (Variable assignment is omitted in this example)
 ! ALL datas are stored in sequence like (((x(ix,iy,iz),ix=1,nx),iy=1,ny),iz=1,nz)
 call plt_file%write_zone_data(type_list, shared_list, your_datas)
 
