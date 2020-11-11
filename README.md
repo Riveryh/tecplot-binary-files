@@ -18,7 +18,7 @@ character(len=50) :: filename='test.plt'
 real(kind=4),allocatable :: your_datas(:,:,:,:)
 real(kind=4) :: physics_time
 
-allocate(your_datas(nx,ny,nz,num_of_variables)
+allocate(your_datas(nx,ny,nz,num_of_variables))
 allocate(locations(num_of_variables))
 allocate(type_list(num_of_variables))
 allocate(shared_list(num_of_variables))
@@ -47,6 +47,13 @@ call plt_file%write_zone_data(type_list, shared_list, your_datas)
 ! before exit, you must call complete subroutine
 call plt_file%complete
 ```
+
+To test the code with the above example, just type the following two lines of command in terminal and check out the result `test.plt` with tecplot or paraview:
+```
+$ make
+$ ./a.out
+```
+ 
 # Notice
 1. Only float data format is supported now.
 2. All subroutiens must be called in sequences.
