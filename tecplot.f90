@@ -56,11 +56,11 @@ contains
 	this%max_K = nnz
 	call RANDOM_NUMBER(rand_num)
 	this%fid = int(rand_num*1000+10)
-	open(unit=this%fid, file=fname, status='replace', form='binary')
+	open(unit=this%fid, file=fname, status='replace', form='unformatted', access='stream')
 	!open scratch files
 	call RANDOM_NUMBER(rand_num)
 	this%sfid = int(rand_num*1000+10)
-	open(unit=this%sfid, status='scratch', form='binary')
+	open(unit=this%sfid, status='scratch', form='unformatted', access='stream')
 	call this%write_header(nnx,nny,nnz,title,variables)
 	this%isInitialized = .true.
 	this%n_zone_header = 0
